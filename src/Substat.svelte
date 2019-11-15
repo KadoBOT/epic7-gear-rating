@@ -19,10 +19,9 @@
     ? `0-${enhancementLevel}`
     : "Set amount of rolls";
   $: rollsNumber = "";
-  $: totalValue = rollsNumber ? substat.max * (rollsNumber + 1) : substat.max;
 
   $: getRating = () => {
-    const rating = (substatValue * 100) / totalValue;
+    const rating = (substatValue * 100) / max;
     if (rating < 55) return "F";
     if (rating < 61) return "E";
     if (rating < 68.76) return "D";
