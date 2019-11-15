@@ -51,7 +51,7 @@
         <div class="input-group mb-2">
           {#if isSelected}
             <div class="input-group-prepend">
-              <div class="input-group-text">Max: {totalValue}</div>
+              <div class="input-group-text">Max: {max}</div>
             </div>
           {/if}
           <input
