@@ -3,11 +3,18 @@
   import Rating from "./Rating.svelte"
 
   let is88 = false;
+  let substats = {
+    0: { min: "", max: "", name: "Other substat or none" },
+    1: { min: 4, min88: 5, max: 8, max88: 9, name: "HP/Def/Eff/EffRes/Atk" },
+    2: { min: 3, min88: 3, max: 5, max88: 6, name: "Crit Rate" },
+    3: { min: 3, min88: 4, max: 7, max88: 8, name: "Crit Dmg" },
+    4: { min: 1, min88: 2, max: 4, max88: 5, name: "Speed" }
+  };
   $: enhancementLevel = "-1";
   $: values = []
   function handleValue(pos) {
-    return function(val) {
-      values[pos] = val
+    return function([val, selected]) {
+      values[pos] = [val, substats[selected].max]
     }
   }
 </script>
@@ -39,8 +46,8 @@
     </div>
   </div>
 </div>
-<Substat {is88} {enhancementLevel} handleValue={handleValue(0)} />
-<Substat {is88} {enhancementLevel} handleValue={handleValue(1)} />
-<Substat {is88} {enhancementLevel} handleValue={handleValue(2)} />
-<Substat {is88} {enhancementLevel} handleValue={handleValue(3)} />
-<Rating {values} />
+<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(0)} />
+<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(1)} />
+<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(2)} />
+<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(3)} />
+<Rating {values} {enhancementLevel} />

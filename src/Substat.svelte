@@ -2,14 +2,8 @@
   export let is88;
   export let enhancementLevel;
   export let handleValue;
+  export let substats
 
-  let substats = {
-    0: { min: "", max: "", name: "Other substat or none" },
-    1: { min: 4, min88: 5, max: 8, max88: 9, name: "HP/Def/Eff/EffRes/Atk" },
-    2: { min: 3, min88: 3, max: 5, max88: 6, name: "Crit Rate" },
-    3: { min: 3, min88: 4, max: 7, max88: 8, name: "Crit Dmg" },
-    4: { min: 1, min88: 2, max: 4, max88: 5, name: "Speed" }
-  };
   $: selected = "0";
   $: isSelected = selected !== "0";
   $: substat = substats[selected];
@@ -22,7 +16,7 @@
     : "Set amount of rolls";
 
   function handleChange() {
-    handleValue(substatValue * 100 / max)
+    handleValue([substatValue, selected])
   }
 </script>
 
