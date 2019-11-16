@@ -1,12 +1,19 @@
 <script>
   import Substat from "./Substat.svelte";
+  import Rating from "./Rating.svelte"
 
   let is88 = false;
   $: enhancementLevel = "-1";
+  $: values = []
+  function handleValue(pos) {
+    return function(val) {
+      values[pos] = val
+    }
+  }
 </script>
 
 <div class="form-row align-items-center">
-  <div class="col-10">
+  <div class="col-4">
     <select
       class="form-control"
       id="enhancementLevel"
@@ -21,7 +28,7 @@
       <option value="5">15</option>
     </select>
   </div>
-  <div class="col-2">
+  <div class="col-8">
     <div class="form-check mb-2">
       <input
         type="checkbox"
@@ -32,7 +39,8 @@
     </div>
   </div>
 </div>
-<Substat {is88} {enhancementLevel} />
-<Substat {is88} {enhancementLevel} />
-<Substat {is88} {enhancementLevel} />
-<Substat {is88} {enhancementLevel} />
+<Substat {is88} {enhancementLevel} handleValue={handleValue(0)} />
+<Substat {is88} {enhancementLevel} handleValue={handleValue(1)} />
+<Substat {is88} {enhancementLevel} handleValue={handleValue(2)} />
+<Substat {is88} {enhancementLevel} handleValue={handleValue(3)} />
+<Rating {values} />
