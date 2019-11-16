@@ -4,16 +4,15 @@
 
   $: getRating = () => {
     const lvl = Number(enhancementLevel) + 1
-    const sum = values.reduce((acc, [val, max]) => acc + (val * 100 / max), 0)
-    const result = sum - (lvl * 10)
-    if (result <= 445) return "F";
-    if (result <= 470) return "E";
-    if (result <= 500) return "D";
-    if (result <= 535) return "C";
-    if (result <= 575) return "B";
-    if (result <= 640) return "A";
-    if (result <= 778) return "S";
-    if (result <= 815) return "SS";
+    const result = values.reduce((acc, [val, max]) => acc + (val * 100 / ((max * lvl) + (max * (values.length - 1)))), 0)
+    if (result <= 54) return "F";
+    if (result <= 65) return "E";
+    if (result <= 73) return "D";
+    if (result <= 80) return "C";
+    if (result <= 86) return "B";
+    if (result <= 91) return "A";
+    if (result <= 95) return "S";
+    if (result <= 98) return "SS";
 
     return "SSS";
   };

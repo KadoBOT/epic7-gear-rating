@@ -1,5 +1,5 @@
 <script>
-  export let is88;
+  export let isDone;
   export let enhancementLevel;
   export let handleValue;
   export let substats
@@ -7,8 +7,8 @@
   $: selected = "0";
   $: isSelected = selected !== "0";
   $: substat = substats[selected];
-  $: min = (is88 ? substat.min88 : substat.min);
-  $: max = (is88 ? substat.max88 : substat.max) * (Number(enhancementLevel) + 1);
+  $: min = substat.min;
+  $: max = substat.max;
   $: substatPlaceholder = isSelected ? `${min}-${max}` : "N/A";
   $: substatValue = "";
   $: rollsNumberPlaceholder = isSelected
@@ -20,13 +20,13 @@
   }
 </script>
 
-{#if enhancementLevel !== '-1'}
+{#if isDone}
   <form>
     <div class="form-row align-items-center">
       <div class="col-5">
         <select class="form-control" id="substatType" bind:value={selected}>
           {#each Object.entries(substats) as [key, value]}
-            <option value={key}>
+            <option value={key} disabled={Number(key) === 0}>
               {value.name}
             </option>
           {/each}
@@ -43,7 +43,7 @@
             type="number"
             class="form-control"
             id="substatValue"
-            disabled={selected === '0'}
+            disabled={Number(selected) <= 0}
             {min}
             {max}
             placeholder={substatPlaceholder}

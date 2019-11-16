@@ -1,26 +1,36 @@
 <script>
   import Substat from "./Substat.svelte";
-  import Rating from "./Rating.svelte"
+  import Rating from "./Rating.svelte";
 
-  let is88 = false;
-  let substats = {
-    0: { min: "", max: "", name: "Other substat or none" },
-    1: { min: 4, min88: 5, max: 8, max88: 9, name: "HP/Def/Eff/EffRes/Atk" },
-    2: { min: 3, min88: 3, max: 5, max88: 6, name: "Crit Rate" },
-    3: { min: 3, min88: 4, max: 7, max88: 8, name: "Crit Dmg" },
-    4: { min: 1, min88: 2, max: 4, max88: 5, name: "Speed" }
+  let getMinAndMax = lvl => {
+    const itemLevel = Number(lvl)
+    if (itemLevel === 4) return [[5, 9], [3, 6], [4, 8], [2, 5]];
+    if (itemLevel === 3) return [[4, 8], [3, 5], [3, 7], [1, 4]];
+    if (itemLevel === 2) return [[3, 7], [2, 4], [3, 6], [1, 4]];
+    return [[3, 6], [2, 4], [3, 5], [1, 3]];
   };
-  $: enhancementLevel = "-1";
-  $: values = []
+  $: level = "";
+  $: minAndMax = getMinAndMax(level)
+  $: substats = {
+    0: { min: "", max: "", name: "No substat" },
+    2: { min: minAndMax[0][0], max: minAndMax[0][1], name: "HP/Def/Eff/EffRes/Atk" },
+    3: { min: minAndMax[1][0], max: minAndMax[1][1], name: "Crit Rate" },
+    4: { min: minAndMax[2][0], max: minAndMax[2][1], name: "Crit Dmg" },
+    5: { min: minAndMax[3][0], max: minAndMax[3][1], name: "Speed" },
+    "-1": { min: 0, max: 0, min88: 0, max88: 0, name: "Other substat" }
+  };
+  $: enhancementLevel = "";
+  $: values = [];
+  $: isDone = level && enhancementLevel;
   function handleValue(pos) {
     return function([val, selected]) {
-      values[pos] = [val, substats[selected].max]
-    }
+      values[pos] = [val, substats[selected].max];
+    };
   }
 </script>
 
 <div class="form-row align-items-center">
-  <div class="col-4">
+  <div class="col">
     <select
       class="form-control"
       id="enhancementLevel"
@@ -35,19 +45,22 @@
       <option value="5">15</option>
     </select>
   </div>
-  <div class="col-8">
-    <div class="form-check mb-2">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="higherLevel"
-        bind:checked={is88} />
-      <label class="form-check-label" for="higherLevel">Level 88+ equip</label>
-    </div>
+  <div class="col">
+    <select
+      class="form-control"
+      id="enhancementLevel"
+      value="-1"
+      bind:value={level}>
+      <option disabled value="-1">Select equipment level</option>
+      <option value="1">T1: (Level 45 ~ 57)</option>
+      <option value="2">T2: (Level 58 ~ 71)</option>
+      <option value="3">T3: (Level 72 ~85)</option>
+      <option value="4">T4: (Level 88 ~ )</option>
+    </select>
   </div>
 </div>
-<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(0)} />
-<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(1)} />
-<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(2)} />
-<Substat {is88} {substats} {enhancementLevel} handleValue={handleValue(3)} />
+<Substat {isDone} {substats} {enhancementLevel} handleValue={handleValue(0)} />
+<Substat {isDone} {substats} {enhancementLevel} handleValue={handleValue(1)} />
+<Substat {isDone} {substats} {enhancementLevel} handleValue={handleValue(2)} />
+<Substat {isDone} {substats} {enhancementLevel} handleValue={handleValue(3)} />
 <Rating {values} {enhancementLevel} />
