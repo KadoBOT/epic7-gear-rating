@@ -5,6 +5,7 @@
   $: getRating = () => {
     const lvl = Number(enhancementLevel) + 1
     const result = values.reduce((acc, [val, max]) => acc + (val * 100 / ((max * lvl) + (max * (values.length - 1)))), 0)
+    console.log(result)
     if (result <= 54) return "F";
     if (result <= 65) return "E";
     if (result <= 73) return "D";

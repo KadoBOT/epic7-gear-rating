@@ -8,7 +8,7 @@
   $: isSelected = selected !== "0";
   $: substat = substats[selected];
   $: min = substat.min;
-  $: max = substat.max;
+  $: max = substat.max * (Number(enhancementLevel) + 1);
   $: substatPlaceholder = isSelected ? `${min}-${max}` : "N/A";
   $: substatValue = "";
   $: rollsNumberPlaceholder = isSelected

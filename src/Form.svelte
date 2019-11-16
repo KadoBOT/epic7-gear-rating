@@ -13,11 +13,11 @@
   $: minAndMax = getMinAndMax(level)
   $: substats = {
     0: { min: "", max: "", name: "No substat" },
-    2: { min: minAndMax[0][0], max: minAndMax[0][1], name: "HP/Def/Eff/EffRes/Atk" },
-    3: { min: minAndMax[1][0], max: minAndMax[1][1], name: "Crit Rate" },
-    4: { min: minAndMax[2][0], max: minAndMax[2][1], name: "Crit Dmg" },
-    5: { min: minAndMax[3][0], max: minAndMax[3][1], name: "Speed" },
-    "-1": { min: 0, max: 0, min88: 0, max88: 0, name: "Other substat" }
+    1: { min: minAndMax[0][0], max: minAndMax[0][1], name: "HP/Def/Eff/EffRes/Atk" },
+    2: { min: minAndMax[1][0], max: minAndMax[1][1], name: "Crit Rate" },
+    3: { min: minAndMax[2][0], max: minAndMax[2][1], name: "Crit Dmg" },
+    4: { min: minAndMax[3][0], max: minAndMax[3][1], name: "Speed" },
+    "-1": { min: 0, max: 0, name: "Other substat" }
   };
   $: enhancementLevel = "";
   $: values = [];
